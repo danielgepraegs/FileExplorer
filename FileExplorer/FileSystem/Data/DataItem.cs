@@ -12,7 +12,6 @@ namespace FileExplorer.FileSystem.Data
 
         public string FullPath { get; set; }
 
-        public string Name { get { return Type == DataType.Drive ? FullPath : DirectoryStructure.GetFileOrFolderName(this.FullPath); } }
-
+        public string Name { get { return Type == DataType.Drive ? FullPath : DirectoryStructure.GetFileOrFolderName(FullPath); } }
     }
 }
