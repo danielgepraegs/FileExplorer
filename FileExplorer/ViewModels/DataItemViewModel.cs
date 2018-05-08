@@ -1,11 +1,7 @@
 ﻿using FileExplorer.FileSystem;
 using FileExplorer.FileSystem.Data;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FileExplorer.ViewModels
@@ -22,7 +18,8 @@ namespace FileExplorer.ViewModels
 
         public bool CanExpand { get { return Type != DataType.File; } }
 
-        public bool IsExpanded { get
+        public bool IsExpanded {
+            get
             {
                 return Children?.Count(f => f != null) > 0;
             }
@@ -41,6 +38,15 @@ namespace FileExplorer.ViewModels
 
         public ICommand ExpandCommand { get; set; }
 
+        public DataItemViewModel(string fullPath, DataType type)
+        {
+            Type = type;
+            FullPath = fullPath;
+            ExpandCommand = new RelayCommand(Expand);
+
+            ClearChildren();
+        }
+
         private void ClearChildren()
         {
             Children = new ObservableCollection<DataItemViewModel>();
@@ -53,7 +59,14 @@ namespace FileExplorer.ViewModels
 
         private void Expand()
         {
-            throw new NotImplementedException();
+            if (Type == DataType.File)
+            {
+                return;
+            }
+
+            var children = DirectoryStructure.GetDirectoryContents(FullPath);
+
+            Children = new ObservableCollection<DataItemViewModel>(children.Select(content => new DataItemViewModel(content.FullPath, content.Type)));
         }
     }
 }

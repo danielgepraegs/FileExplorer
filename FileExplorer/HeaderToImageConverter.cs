@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FileExplorer.FileSystem.Data;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
 namespace FileExplorer
 {
-    [ValueConversion(typeof(string), typeof(BitmapImage))]
+    [ValueConversion(typeof(DataItem), typeof(BitmapImage))]
     public class HeaderToImageConverter : IValueConverter
     {
         public static HeaderToImageConverter Instance = new HeaderToImageConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var path = (string)value;
+            var image = "Images/Light/appbar.server.png";
 
-            if (path == null)
+            switch ((DataType)value)
             {
-                return null;
+                case DataType.Drive:
+                    image = "Images/Light/appbar.server.png";
+                    break;
+                case DataType.Folder:
+                    image = "Images/Light/appbar.folder.png";
+                    break;
             }
 
-            var image = "appbar.server.png";
-
-            return new BitmapImage(new Uri($"pack://application:,,,/Images/Light/{image}"));
+            return new BitmapImage(new Uri($"pack://application:,,,/{image}"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
