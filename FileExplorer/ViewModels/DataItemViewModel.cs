@@ -28,10 +28,16 @@ namespace FileExplorer.ViewModels
                 if (value == true)
                 {
                     Expand();
+
+                    if (Type == DataType.FolderClosed)
+                    {
+                        Type = DataType.FolderOpened;
+                    }
                 }
                 else
                 {
                     ClearChildren();
+                    Type = DataType.FolderClosed;
                 }
             }
         }
@@ -55,6 +61,15 @@ namespace FileExplorer.ViewModels
             {
                 Children.Add(null);
             }
+            else
+            {
+                Children = new ObservableCollection<DataItemViewModel>();
+            }
+
+            if (Type != DataType.File && Type != DataType.Empty && Type != DataType.Drive)
+            {
+                Children.Add(null);
+            }
         }
 
         private void Expand()
@@ -67,6 +82,11 @@ namespace FileExplorer.ViewModels
             var children = DirectoryStructure.GetDirectoryContents(FullPath);
 
             Children = new ObservableCollection<DataItemViewModel>(children.Select(content => new DataItemViewModel(content.FullPath, content.Type)));
+
+            if (children.Count < 1)
+            {
+                Children.Add(new DataItemViewModel("", DataType.Empty));
+            }
         }
     }
 }

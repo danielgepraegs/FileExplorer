@@ -20,9 +20,14 @@ namespace FileExplorer
                 case DataType.Drive:
                     image = "Images/Light/appbar.server.png";
                     break;
-                case DataType.Folder:
+                case DataType.FolderClosed:
                     image = "Images/Light/appbar.folder.png";
                     break;
+                case DataType.FolderOpened:
+                    image = "Images/Light/appbar.folder.open.png";
+                    break;
+                case DataType.Empty:
+                    return null;
             }
 
             return new BitmapImage(new Uri($"pack://application:,,,/{image}"));

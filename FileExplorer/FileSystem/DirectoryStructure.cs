@@ -44,7 +44,7 @@ namespace FileExplorer.FileSystem
                     items.AddRange(dirs.Select(dir => new DataItem
                     {
                         FullPath = dir,
-                        Type = DataType.Folder
+                        Type = DataType.FolderClosed
                     }));
                 }
             }

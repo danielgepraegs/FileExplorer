@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExplorer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="FileExplorer" Height="425.923" Width="775.923">
     <Grid>
         <TreeView x:Name="FolderView" ItemsSource="{Binding Items}">
             <TreeView.ItemContainerStyle>
@@ -16,7 +16,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="20" Margin="3" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
+                        <Image Width="40" Margin="3" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
                         <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>

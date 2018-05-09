@@ -3,7 +3,9 @@
     public enum DataType
     {
         Drive,
-        Folder,
-        File
+        FolderOpened,
+        FolderClosed,
+        File,
+        Empty
     }
 }
