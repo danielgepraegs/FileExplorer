@@ -13,7 +13,6 @@ namespace FileExplorer
             InitializeComponent();
 
             DataContext = new DirectoryStructureViewModel();
-
         }
     }
 }

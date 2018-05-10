@@ -13,18 +13,18 @@ namespace FileExplorer
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var image = "Images/Light/appbar.server.png";
+            var image = "Images/icons8-file-40.png";
 
             switch ((DataType)value)
             {
                 case DataType.Drive:
-                    image = "Images/Light/appbar.server.png";
+                    image = "Images/icons8-hdd-48.png";
                     break;
                 case DataType.FolderClosed:
-                    image = "Images/Light/appbar.folder.png";
+                    image = "Images/icons8-folder-50.png";
                     break;
                 case DataType.FolderOpened:
-                    image = "Images/Light/appbar.folder.open.png";
+                    image = "Images/icons8-open-50.png";
                     break;
                 case DataType.Empty:
                     return null;

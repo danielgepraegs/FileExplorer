@@ -7,10 +7,12 @@ namespace FileExplorer.FileSystem
 {
     public static class DirectoryStructure
     {
-        public static List<Data.DataItem> GetLogicalDrives()
+        public static List<DataItem> GetLogicalDrives()
         {
-            
-            return Directory.GetLogicalDrives().Select(drive => new DataItem { FullPath = drive, Type = DataType.Drive }).ToList();
+            DriveInfo[] drives = DriveInfo.GetDrives();
+
+            // This is only called once so set FullPath with the VolumeLabel, in DataItemViewModel I substring the actual drive name for the expanded items...
+            return drives.Select(drive => new DataItem { FullPath = drive.VolumeLabel + " (" + drive.Name + ")", Type = DataType.Drive, }).ToList();
         }
 
         public static string GetFileOrFolderName(string path)

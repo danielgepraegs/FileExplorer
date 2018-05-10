@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExplorer"
         mc:Ignorable="d"
-        Title="FileExplorer" Height="425.923" Width="775.923">
-    <Grid>
-        <TreeView x:Name="FolderView" ItemsSource="{Binding Items}">
+        Title="FileExplorer" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="5 5 5 5 ">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="SelectedView" IsReadOnly="True" Text="{Binding ElementName=FolderView, Path=SelectedItem.FullPath}" Margin="0 0 0 5" Padding="1 1 1 1"/>
+        <TreeView Grid.Row="1" x:Name="FolderView" ItemsSource="{Binding Items}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -16,7 +22,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="40" Margin="3" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
+                        <Image Width="32" Margin="3" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
                         <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>

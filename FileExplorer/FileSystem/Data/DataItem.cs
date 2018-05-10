@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileExplorer.FileSystem.Data
+﻿namespace FileExplorer.FileSystem.Data
 {
     public class DataItem
     {
@@ -12,6 +6,12 @@ namespace FileExplorer.FileSystem.Data
 
         public string FullPath { get; set; }
 
-        public string Name { get { return Type == DataType.Drive ? FullPath : DirectoryStructure.GetFileOrFolderName(FullPath); } }
+        public string Name
+        {
+            get
+            {
+                return Type == DataType.Drive ? FullPath : DirectoryStructure.GetFileOrFolderName(FullPath);
+            }
+        }
     }
 }

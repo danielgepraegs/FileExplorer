@@ -16,7 +16,13 @@ namespace FileExplorer.ViewModels
 
         public ObservableCollection<DataItemViewModel> Children { get; set; }
 
-        public bool CanExpand { get { return Type != DataType.File; } }
+        public ICommand ExpandCommand { get; set; }
+
+        public bool CanExpand { get
+            {
+                return Type != DataType.File;
+            }
+        }
 
         public bool IsExpanded {
             get
@@ -37,12 +43,14 @@ namespace FileExplorer.ViewModels
                 else
                 {
                     ClearChildren();
-                    Type = DataType.FolderClosed;
+
+                    if (Type != DataType.Drive)
+                    {
+                        Type = DataType.FolderClosed;
+                    }
                 }
             }
         }
-
-        public ICommand ExpandCommand { get; set; }
 
         public DataItemViewModel(string fullPath, DataType type)
         {
@@ -65,11 +73,6 @@ namespace FileExplorer.ViewModels
             {
                 Children = new ObservableCollection<DataItemViewModel>();
             }
-
-            if (Type != DataType.File && Type != DataType.Empty && Type != DataType.Drive)
-            {
-                Children.Add(null);
-            }
         }
 
         private void Expand()
@@ -79,14 +82,10 @@ namespace FileExplorer.ViewModels
                 return;
             }
 
-            var children = DirectoryStructure.GetDirectoryContents(FullPath);
+            // I want to display the drives VolumeLabel, due to the way the Model/ViewModels are setup and this is just practice...
+            var children = DirectoryStructure.GetDirectoryContents(Type == DataType.Drive ? FullPath.Substring(FullPath.Count() - 4, 3) : FullPath);
 
             Children = new ObservableCollection<DataItemViewModel>(children.Select(content => new DataItemViewModel(content.FullPath, content.Type)));
-
-            if (children.Count < 1)
-            {
-                Children.Add(new DataItemViewModel("", DataType.Empty));
-            }
         }
     }
 }

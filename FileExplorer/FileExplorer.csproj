@@ -108,21 +108,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Light\appbar.server.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Dark\appbar.folder.open.png" />
-    <Resource Include="Images\Dark\appbar.folder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Light\appbar.folder.open.png" />
-    <Resource Include="Images\Light\appbar.folder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Dark\appbar.server.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icons8-folder-50.png" />
+    <Resource Include="Images\icons8-open-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icons8-file-40.png" />
+    <Resource Include="Images\icons8-hdd-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.0.3\build\Fody.targets')" />
