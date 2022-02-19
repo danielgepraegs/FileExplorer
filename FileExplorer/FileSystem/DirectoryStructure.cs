@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace FileExplorer.FileSystem
 {
@@ -9,10 +10,32 @@ namespace FileExplorer.FileSystem
     {
         public static List<DataItem> GetLogicalDrives()
         {
-            DriveInfo[] drives = DriveInfo.GetDrives();
+            var drives = DriveInfo.GetDrives();
 
             // This is only called once so set FullPath with the VolumeLabel, in DataItemViewModel I substring the actual drive name for the expanded items...
-            return drives.Select(drive => new DataItem { FullPath = drive.VolumeLabel + " (" + drive.Name + ")", Type = DataType.Drive, }).ToList();
+            foreach (var drive in drives)
+            {
+                System.Console.WriteLine($"Checking drive {drive}");
+                if (!drive.IsReady)
+                {
+                    if (!drive.RootDirectory.Exists)
+                    {
+                        System.Console.WriteLine($"Drive does not exist \"{drive}\"");
+                    }
+                }
+                System.Console.WriteLine($"Drive \"{drive}\" is now ready!");
+            }
+
+
+            var result = drives
+                .Where(drive => drive.IsReady && drive.RootDirectory.Exists)
+                .Select(x => new DataItem
+                {
+                    FullPath = x.Name,
+                    Type = DataType.Drive
+                }).ToList();
+
+            return result;
         }
 
         public static string GetFileOrFolderName(string path)

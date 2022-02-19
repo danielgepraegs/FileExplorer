@@ -4,29 +4,62 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExplorer"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
+        SnapsToDevicePixels="True" UseLayoutRounding="True"
         Title="FileExplorer" Height="500" Width="800" WindowStartupLocation="CenterScreen">
-
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="2 3" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="2 3" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid Margin="5 5 5 5 ">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox x:Name="SelectedView" IsReadOnly="True" Text="{Binding ElementName=FolderView, Path=SelectedItem.FullPath}" Margin="0 0 0 5" Padding="1 1 1 1"/>
-        <TreeView Grid.Row="1" x:Name="FolderView" ItemsSource="{Binding Items}">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="32" Margin="3" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
-                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+        <Border>
+            <UniformGrid>
+                <DockPanel>
+                    <Button Content="Load file" Command="{Binding LoadFileCommand}" DockPanel.Dock="Right" />
+                    <TextBox x:Name="SelectedView" IsReadOnly="True" Text="{Binding SelectedPath}" />
+                    <TextBox IsReadOnly="True" Text="{Binding ElementName=FolderView, Path=SelectedItem.FullPath}" />
+                </DockPanel>
+                <TextBox x:Name="Filter" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+
+                <StackPanel>
+                    <Button Content="Search" />
+                </StackPanel>
+            </UniformGrid>
+        </Border>
+        <Border Grid.Row="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TreeView Grid.Column="0" x:Name="FolderView" ItemsSource="{Binding Items}" >
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="Margin" Value="-5 0 0 0" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+                            <StackPanel Orientation="Horizontal" Margin="-5 0 0 0">
+                                <Image Width="16" Margin="3 1" Source="{Binding Type, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

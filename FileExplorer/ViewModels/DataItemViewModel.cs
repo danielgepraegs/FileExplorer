@@ -18,13 +18,16 @@ namespace FileExplorer.ViewModels
 
         public ICommand ExpandCommand { get; set; }
 
-        public bool CanExpand { get
+        public bool CanExpand
+        {
+            get
             {
                 return Type != DataType.File;
             }
         }
 
-        public bool IsExpanded {
+        public bool IsExpanded
+        {
             get
             {
                 return Children?.Count(f => f != null) > 0;
@@ -83,7 +86,7 @@ namespace FileExplorer.ViewModels
             }
 
             // I want to display the drives VolumeLabel, due to the way the Model/ViewModels are setup and this is just practice...
-            var children = DirectoryStructure.GetDirectoryContents(Type == DataType.Drive ? FullPath.Substring(FullPath.Count() - 4, 3) : FullPath);
+            var children = DirectoryStructure.GetDirectoryContents(Type == DataType.Drive ? FullPath : FullPath);
 
             Children = new ObservableCollection<DataItemViewModel>(children.Select(content => new DataItemViewModel(content.FullPath, content.Type)));
         }

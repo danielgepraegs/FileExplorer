@@ -15,5 +15,12 @@ namespace FileExplorer.ViewModels
 
             Items = new ObservableCollection<DataItemViewModel>(children.Select(drive => new DataItemViewModel(drive.FullPath, DataType.Drive)));
         }
+
+        public DirectoryStructureViewModel(string basePath)
+        {
+            var directory = DirectoryStructure.GetFileOrFolderName(basePath);
+        }
+
+
     }
 }
